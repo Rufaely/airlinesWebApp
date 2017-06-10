@@ -24,6 +24,15 @@
 	</servlet>
 
 	<welcome-file-list>
-		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.xhtml</welcome-file>
 	</welcome-file-list>
+	
+	  <servlet>
+		<servlet-name>Faces</servlet-name>
+		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Faces</servlet-name>
+		<url-pattern>*.xhtml</url-pattern>
+	</servlet-mapping>
 </web-app>

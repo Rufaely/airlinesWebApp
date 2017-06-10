@@ -1,5 +1,7 @@
 package cs545.airline.service;
 
+
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -17,8 +19,8 @@ import cs545.airline.model.Flight;
 @Named
 @ApplicationScoped
 @Transactional
-public class FlightService {
-	
+public class FlightService{
+
 	@Inject
 	private FlightDao flightDao;
 	
@@ -77,11 +79,19 @@ public class FlightService {
 	}
 
 	public List<Flight> findAll() {
+		System.out.println("Entro a la lista");
 		return flightDao.findAll();
 	}
+	
 	
 	//ADDED
 	public Flight findById(long id) {
 		return flightDao.findOneById(id);
 	}
+	
+	//need GET to be able to use
+	public Collection<Flight> getAllFlight() {
+		return flightDao.findAll();
+	}
+	
 }

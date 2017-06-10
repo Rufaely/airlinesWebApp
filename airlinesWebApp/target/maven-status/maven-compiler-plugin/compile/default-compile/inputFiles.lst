@@ -18,5 +18,6 @@
 /Users/glomaga/git/airlinesWebApp/airlinesWebApp/src/main/java/edu/mum/cs545/ws/AirportRest.java
 /Users/glomaga/git/airlinesWebApp/airlinesWebApp/src/main/java/cs545/airline/configuration/RestConfig.java
 /Users/glomaga/git/airlinesWebApp/airlinesWebApp/src/main/java/cs545/airline/model/Airport.java
+/Users/glomaga/git/airlinesWebApp/airlinesWebApp/src/main/java/cs545/airline/service/EditorBean.java
 /Users/glomaga/git/airlinesWebApp/airlinesWebApp/src/main/java/edu/mum/cs545/ws/AirplaneRest.java
 /Users/glomaga/git/airlinesWebApp/airlinesWebApp/src/main/java/edu/mum/gf/workaround/CDIBeanManager.java

@@ -1,5 +1,7 @@
 package cs545.airline.service;
 
+import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -15,8 +17,12 @@ import cs545.airline.model.Flight;
 @Named
 @ApplicationScoped
 @Transactional
-public class AirportService {
+public class AirportService implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	// These services should be evaluated to reconsider which methods should be public 
 
 	@Inject
@@ -71,4 +77,18 @@ public class AirportService {
 	public Airport findById(long id) {
 		return airportDao.findOneById(id);
 	}
+	
+	//need GET to be able to use
+	public Collection<Airport> getAllAirport() {
+		return airportDao.findAll();
+	}
+	
+	public List<Airport> getFindByDeparture(Flight flight) {
+		return this.findByDeparture(flight);
+	}
+	
+	public List<Airport> getFindByArrival(Flight flight) {
+		return this.getFindByArrival(flight);
+	}
+
 }

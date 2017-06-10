@@ -1,5 +1,7 @@
 package cs545.airline.service;
 
+import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -15,8 +17,12 @@ import cs545.airline.model.Flight;
 @Named
 @ApplicationScoped
 @Transactional
-public class AirplaneService {
+public class AirplaneService  implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	// These services should be evaluated to reconsider which methods should be public 
 
 	@Inject
@@ -59,5 +65,13 @@ public class AirplaneService {
 	public Airplane findById(long id) {
 		return airplaneDao.findOneById(id);
 	}
-
+	
+	//need GET to be able to use
+	public Collection<Airplane> getAllAirplane() {
+		return airplaneDao.findAll();
+	}
+	
+	public List<Airplane> getFindByFlight(Flight flight) {
+		return this.getFindByFlight(flight);
+	}
 }

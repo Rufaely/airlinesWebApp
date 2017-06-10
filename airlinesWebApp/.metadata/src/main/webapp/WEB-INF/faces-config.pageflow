@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf14971135533660" configfile="/airlinesWebApp/src/main/webapp/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="index.xhtml" x="122" y="178" id="pf14971135742491" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf14971135742502 pf14971135742503 pf14971146473816" path="index.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="faces/Listflights.xhtml" x="338" y="178" id="pf14971135742514" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf14971135742502" path="faces/Listflights.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="faces/filter.xhtml" id="pf14971135742515" referenceLink="//@navigationRule.0/@navigationCase.1/@toViewId|" inlinks="pf14971135742503" path="faces/filter.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="faces/filterflights.xhtml" id="pf14971146473817" referenceLink="//@navigationRule.0/@navigationCase.2/@toViewId|" inlinks="pf14971146473816" path="faces/filterflights.xhtml"/>
+  <links id="pf14971135742502" target="pf14971135742514" source="pf14971135742491" outcome="list"/>
+  <links id="pf14971135742503" target="pf14971135742515" source="pf14971135742491" outcome="filter"/>
+  <links id="pf14971146473816" target="pf14971146473817" source="pf14971135742491" outcome="filterFlights"/>
+</pageflow:Pageflow>
