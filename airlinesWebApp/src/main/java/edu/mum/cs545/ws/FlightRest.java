@@ -25,6 +25,9 @@ import cs545.airline.model.Airline;
 import cs545.airline.model.Airplane;
 import cs545.airline.model.Airport;
 import cs545.airline.model.Flight;
+import cs545.airline.service.AirlineService;
+import cs545.airline.service.AirplaneService;
+import cs545.airline.service.AirportService;
 import cs545.airline.service.FlightService;
 
 @Named
@@ -33,6 +36,12 @@ public class FlightRest {
 
 	@Inject
 	private FlightService flightService;
+	@Inject
+	private AirportService airportService;
+	@Inject
+	private AirlineService airlineService;
+	@Inject
+	private AirplaneService airplaneService;
 	private static final String SUCCESS_RESULT = "<result>success</result>";
 	private static final String FAILURE_RESULT = "<result>failure</result>";
 
@@ -40,7 +49,7 @@ public class FlightRest {
 	@Path("/Create")
 	@Produces(MediaType.APPLICATION_XML)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public String CreateFlight(Flight flight, @Context HttpServletResponse servletResponse) throws IOException {
+	public String CreateFlight(Flight flight) throws IOException {
 		System.out.println("ENVIO DE DATOS DESDE WS CREATE JSON : " + flight);
 		flightService.create(flight);
 		return SUCCESS_RESULT;
@@ -49,9 +58,8 @@ public class FlightRest {
 	
 	@DELETE
 	@Path("/Delete/{id}")
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public String DeleteFlight(@PathParam("id") long id,
-			@Context HttpServletResponse servletResponse) throws IOException {
+	@Produces(MediaType.APPLICATION_XML)
+	public String DeleteFlight(@PathParam("id") long id) throws IOException {
 		Flight flight = flightService.findById(id);
 		System.out.println("ENVIO DE DATOS DESDE WS DELETE: " + flight);
 		flightService.delete(flight);
@@ -61,8 +69,9 @@ public class FlightRest {
 	
 	@POST
 	@Path("/Update")
+	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Flight UpdateFlight(	Flight flight, @Context HttpServletResponse servletResponse) throws IOException {
+	public Flight UpdateFlight(	Flight flight) throws IOException {
 		System.out.println("ENVIO DE DATOS DESDE WS UPDATE: " + flight);
 		return flightService.update(flight);
 	}
@@ -83,9 +92,8 @@ public class FlightRest {
 
 	@GET
 	@Path("/FindByNumber")
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public List<Flight> FindByNumberFlight(@QueryParam("Flightnr") String flightnr,
-			@Context HttpServletResponse servletResponse) throws IOException {
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Flight> FindByNumberFlight(@QueryParam("Flightnr") String flightnr) throws IOException {
 		if ("".equals(flightnr)) {
 			return null;
 		}
@@ -94,9 +102,8 @@ public class FlightRest {
 
 	@GET
 	@Path("/FindByArrivalDate")
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public List<Flight> findByArrivalFlight(@QueryParam("datetime") String datetime,
-			@Context HttpServletResponse servletResponse) throws IOException {
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Flight> findByArrivalFlight(@QueryParam("datetime") String datetime) throws IOException {
 		if ("".equals(datetime)) {
 			return null;
 		}
@@ -114,9 +121,9 @@ public class FlightRest {
 
 	@GET
 	@Path("/FindByArrivalBetween")
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	@Produces(MediaType.APPLICATION_JSON)
 	public List<Flight> FindByArrivalBetweenFlight(@QueryParam("datetimeFrom") String datetimeFrom,
-			@QueryParam("datetimeTo") String datetimeTo, @Context HttpServletResponse servletResponse)
+			@QueryParam("datetimeTo") String datetimeTo)
 			throws IOException {
 		if ("".equals(datetimeFrom) || "".equals(datetimeTo)) {
 			return null;
@@ -134,9 +141,8 @@ public class FlightRest {
 
 	@GET
 	@Path("/FindByDeparture")
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public List<Flight> findByDepartureFlight(@QueryParam("datetime") String datetime,
-			@Context HttpServletResponse servletResponse) throws IOException {
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Flight> findByDepartureFlight(@QueryParam("datetime") String datetime) throws IOException {
 		if ("".equals(datetime)) {
 			return null;
 		}
@@ -154,9 +160,9 @@ public class FlightRest {
 
 	@GET
 	@Path("/FindByDepartureBetween")
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	@Produces(MediaType.APPLICATION_JSON)
 	public List<Flight> findByDepartureBetweenFlight(@QueryParam("datetimeFrom") String datetimeFrom,
-			@QueryParam("datetimeTo") String datetimeTo, @Context HttpServletResponse servletResponse)
+			@QueryParam("datetimeTo") String datetimeTo)
 			throws IOException {
 		if ("".equals(datetimeFrom) || "".equals(datetimeTo)) {
 			return null;
@@ -177,68 +183,58 @@ public class FlightRest {
 	//=============================CREATE OBJECT BEFORE CALL THE SERVICE ==================================
 	@GET
 	@Path("/FindById")
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public Flight FindByIdFlight(@QueryParam("id") long id, 
-			@Context HttpServletResponse servletResponse)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Flight FindByIdFlight(@QueryParam("id") long id)
 			throws IOException {
 		if ("".equals(id)) {
 			return null;
 		}
-		Flight flight = new Flight();
-		flight.setId(id);
+		Flight flight = flightService.findById(id);
 		return flightService.find(flight);
 	}
 	
 	@GET
 	@Path("/FindByAirline")
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public List<Flight> findByAirlineFlight(@QueryParam("id") long id,
-			@Context HttpServletResponse servletResponse) throws IOException {
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Flight> findByAirlineFlight(@QueryParam("id") long id) throws IOException {
 		if ("".equals(id)) {
 			return null;
 		}
-		Airline airline = new Airline();
-		airline.setId(id);
+		Airline airline = airlineService.findById(id);
 		return flightService.findByAirline(airline);
 	}
 	
 	@GET
 	@Path("/FindByOrigin")
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public List<Flight> findByOriginFlight(@QueryParam("id") long id,
-			@Context HttpServletResponse servletResponse) throws IOException {
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Flight> findByOriginFlight(@QueryParam("id") long id) throws IOException {
 		if ("".equals(id)) {
 			return null;
 		}
-		Airport airport = new Airport();
-		airport.setId(id);
+		Airport airport = airportService.findById(id);
 		return flightService.findByOrigin(airport);
 	}
 	
 	@GET
 	@Path("/FindByDestination")
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public List<Flight> findByDestinationFlight(@QueryParam("id") long id,
-			@Context HttpServletResponse servletResponse) throws IOException {
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Flight> findByDestinationFlight(@QueryParam("id") long id) throws IOException {
 		if ("".equals(id)) {
 			return null;
 		}
-		Airport airport = new Airport();
-		airport.setId(id);
+		Airport airport = airportService.findById(id);
 		return flightService.findByDestination(airport);
 	}
 	
 	
 	@GET
 	@Path("/FindByArrivalPlane")
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public List<Flight> findByArrivalFlight(@QueryParam("id") long id,
-			@Context HttpServletResponse servletResponse) throws IOException {
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Flight> findByArrivalFlight(@QueryParam("id") long id) throws IOException {
 		if ("".equals(id)) {
 			return null;
 		}
-		Airplane airplane = new Airplane();
-		airplane.setId(id);
+		Airplane airplane = airplaneService.findById(id);
 		return flightService.findByArrival(airplane);
 	}
 	
