@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 
-
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -17,7 +16,7 @@ import cs545.airline.model.Flight;
 @Named
 @ApplicationScoped
 @Transactional
-public class AirlineService implements Serializable{
+public class AirlineService implements Serializable {
 
 	// These services should be evaluated to reconsider which methods should be
 	// public
@@ -28,7 +27,7 @@ public class AirlineService implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@Inject
 	private AirlineDao airlineDao;
-	
+
 	public void create(Airline airport) {
 		airlineDao.create(airport);
 	}
@@ -49,25 +48,28 @@ public class AirlineService implements Serializable{
 		return airlineDao.findOneByName(name);
 	}
 
-
 	public List<Airline> findByFlight(Flight flight) {
-		return airlineDao.findByFlight(flight.getId());
+		if (flight != null) {
+			return airlineDao.findByFlight(flight.getId());
+		} else {
+			return null;
+		}
 	}
 
 	public List<Airline> findAll() {
 		return airlineDao.findAll();
 	}
-	
-	//ADDED
+
+	// ADDED
 	public Airline findById(long id) {
 		return airlineDao.findOneById(id);
 	}
-	
-	//need GET to be able to use
+
+	// need GET to be able to use
 	public Collection<Airline> getAllAirline() {
 		return airlineDao.findAll();
 	}
-	
+
 	public List<Airline> getFindByFlight(Flight flight) {
 		return this.findByFlight(flight);
 	}

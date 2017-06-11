@@ -50,11 +50,19 @@ public class AirportService implements Serializable {
 	}
 
 	public List<Airport> findByArrival(Flight flight) {
-		return airportDao.findByArrival(flight.getId());
+		if(flight!= null){
+		return airportDao.findByArrival(flight.getId());}
+		else{
+			return null;
+		}
 	}
 
 	public List<Airport> findByDeparture(Flight flight) {
-		return airportDao.findByDeparture(flight.getId());
+		if(flight!= null){
+		return airportDao.findByDeparture(flight.getId());}
+		else{
+			return null;
+		}
 	}
 
 	public List<Airport> findByCity(String city) {

@@ -1,5 +1,6 @@
 package cs545.airline.model;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -13,7 +14,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-public class Flight {
+public class Flight implements Serializable {
 	@Id
 	@GeneratedValue
 	private long id;

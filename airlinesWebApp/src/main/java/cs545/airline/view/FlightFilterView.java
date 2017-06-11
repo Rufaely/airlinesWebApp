@@ -1,4 +1,4 @@
-package cs545.airline.filter;
+package cs545.airline.view;
 
 import java.io.Serializable;
 import java.util.List;

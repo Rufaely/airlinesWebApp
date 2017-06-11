@@ -1,5 +1,6 @@
 package cs545.airline.model;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 
@@ -13,7 +14,7 @@ import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(uniqueConstraints=@UniqueConstraint(name="Airline_Name",columnNames={"name"}))
-public class Airline {
+public class Airline implements Serializable{
 	@Id
 	@GeneratedValue
 	private long id;

@@ -50,7 +50,11 @@ public class AirplaneService  implements Serializable{
 	}
 
 	public List<Airplane> findByFlight(Flight flight) {
-		return airplaneDao.findByFlight(flight.getId());
+		if(flight!= null){
+		return airplaneDao.findByFlight(flight.getId());}
+		else{
+			return null;
+		}
 	}
 
 	public List<Airplane> findByModel(String model) {
