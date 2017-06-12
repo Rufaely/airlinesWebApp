@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -11,6 +12,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+
 
 @Entity
 @Table(uniqueConstraints=@UniqueConstraint(name="Airline_Name",columnNames={"name"}))
@@ -28,6 +30,10 @@ public class Airline implements Serializable{
 	}
 
 	public Airline(String name) {
+		this.name = name;
+	}
+	
+	public Airline(long id,String name) {
 		this.name = name;
 	}
 

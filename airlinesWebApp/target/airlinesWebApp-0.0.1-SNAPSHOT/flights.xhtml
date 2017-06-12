@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<title>FILTER</title>
+</h:head>
+<h:body>
+	<ui:composition template="/templates/masterLayout.xhtml">
+		<ui:define name="windowTitle">
+            #{msgs.flight}
+         </ui:define>
+		<ui:define name="content">
+			<h:form>
+				<p:commandButton value="#{msgs.clearfilter}"
+					action="#{dtFlightFilterView.clearFilters}" process="@this"
+					update="fligthlist" />
+				<p:dataTable id="fligthlist" var="fl"
+					value="#{dtFlightFilterView.flights}" paginator="true" rows="5"
+					widgetVar="flightsTable"
+					emptyMessage="#{msgs.noflights}"
+					filteredValue="#{dtFlightFilterView.filteredFlights}"
+					resizableColumns="true">
+					<f:facet name="header">
+						<p:outputPanel>
+							<h:outputText value="#{msgs.search}:" />
+							<p:inputText id="globalFilter"
+								onkeyup="PF('flightsTable').filter()" style="width:150px"
+								placeholder="#{msgs.Enterkey}" />
+						</p:outputPanel>
+					</f:facet>
+					<p:column filterStyleClass="filterclass" filterBy="#{fl.flightnr}"
+						headerText="#{msgs.flightnr}" filterMatchMode="contains">
+						<h:outputText value="#{fl.flightnr}" />
+					</p:column>
+					<p:column filterStyleClass="filterclass"
+						filterBy="#{fl.airline.name}" headerText="#{msgs.airline}"
+						filterMatchMode="contains">
+						<h:outputText value="#{fl.airline.name}" />
+					</p:column>
+					<p:column filterStyleClass="filterclass"
+						filterBy="#{fl.departureDate}" headerText="#{msgs.departuredate}"
+						filterMatchMode="contains">
+						<h:outputText value="#{fl.departureDate}">
+						</h:outputText>
+					</p:column>
+					<p:column filterStyleClass="filterclass"
+						filterBy="#{fl.departureTime}" headerText="#{msgs.departuretime}"
+						filterMatchMode="contains">
+						<h:outputText value="#{fl.departureTime}" />
+					</p:column>
+					<p:column filterStyleClass="filterclass"
+						filterBy="#{fl.arrivalDate}" headerText="#{msgs.arrivaldate}"
+						filterMatchMode="contains">
+						<h:outputText value="#{fl.arrivalDate}" />
+					</p:column>
+					<p:column filterStyleClass="filterclass"
+						filterBy="#{fl.arrivalTime}" headerText="#{msgs.arrivaldate}"
+						filterMatchMode="contains">
+						<h:outputText value="#{fl.arrivalTime}" />
+					</p:column>
+					<p:column filterStyleClass="filterclass"
+						filterBy="#{fl.origin.airportcode}"
+						headerText="#{msgs.origincode}" filterMatchMode="contains">
+						<h:outputText value="#{fl.origin.airportcode}" />
+					</p:column>
+					<p:column filterStyleClass="filterclass"
+						filterBy="#{fl.origin.name}" headerText="#{msgs.origin}"
+						filterMatchMode="contains">
+						<h:outputText value="#{fl.origin.name}" />
+					</p:column>
+					<p:column filterStyleClass="filterclass"
+						filterBy="#{fl.destination.airportcode}"
+						headerText="#{msgs.destinationcode}" filterMatchMode="contains">
+						<h:outputText value="#{fl.destination.airportcode}" />
+					</p:column>
+					<p:column filterStyleClass="filterclass"
+						filterBy="#{fl.destination.name}"
+						headerText="#{msgs.destination}" filterMatchMode="contains">
+						<h:outputText value="#{fl.destination.name}" />
+					</p:column>
+					<p:column headerText="#{msgs.Airplanemodcap}"
+						filterMatchMode="contains">
+						<h:outputText
+							value="#{fl.airplane.model.concat('-'.concat(fl.airplane.capacity))}" />
+					</p:column>
+				</p:dataTable>
+
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

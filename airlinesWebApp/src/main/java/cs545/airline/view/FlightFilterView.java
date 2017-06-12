@@ -47,5 +47,9 @@ public class FlightFilterView implements Serializable {
 	public void setService(FlightService service) {
 		this.service = service;
 	}
-
+	
+    public void clearFilters() {
+        // Try to clear the datatable filters
+        this.filteredFlights = null;     
+    }
 }

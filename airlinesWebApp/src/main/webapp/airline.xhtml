@@ -1,0 +1,355 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<title>FILTER</title>
+</h:head>
+<h:body>
+	<ui:composition template="/templates/masterLayout.xhtml">
+		<ui:define name="windowTitle">
+            #{msgs.airlinemanege}
+         </ui:define>
+		<ui:define name="content">
+			<h:form id="form1">
+				<p:growl id="messages" showDetail="true" autoUpdate="true" />
+				<p:tabView>
+					<p:tab title="#{msgs.airlines}">
+						<p:panel header="#{msgs.newairline}" style="width: 600px;">
+							<p:panelGrid columns="2">
+								<h:outputText value="#{msgs.name}"></h:outputText>
+								<h:inputText id="airlinename" binding="#{airlinename}"></h:inputText>
+
+								<f:facet name="footer">
+									<p:commandButton value="#{msgs.save}"
+										actionListener="#{buttonView.saveAirline(airlinename.value)}"
+										icon="ui-icon-disk" update="airlinetable airlinelist"/>
+								</f:facet>
+							</p:panelGrid>
+							<p:spacer height="30px;" />
+							<p:dataTable id="airlinetable" paginator="true" rows="5"
+								value="#{airlineService.allAirline}" var="o" editable="true">
+								<f:facet name="header">  
+                         #{msgs.airlinelist}
+                    </f:facet>
+								<p:ajax event="rowEdit" listener="#{buttonView.updateAirline}"
+									update=":form1:messages" />
+								<p:ajax event="rowEditCancel"
+									listener="#{buttonView.deleteAirline}" update=":form1:messages" />
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="#{msgs.name}" />
+									</f:facet>
+									<p:cellEditor>
+										<f:facet name="output">
+											<h:outputText value="#{o.name}" />
+										</f:facet>
+										<f:facet name="input">
+											<p:inputText value="#{o.name}" style="width:100%" />
+										</f:facet>
+									</p:cellEditor>
+								</p:column>
+								<p:column headerText="#{msgs.optiontables}" style="width:50px">
+									<p:rowEditor />
+								</p:column>
+							</p:dataTable>
+						</p:panel>
+					</p:tab>
+					<p:tab title="#{msgs.airplanes}">
+						<p:panel header="#{msgs.newairplane}" style="width: 600px;">
+							<p:panelGrid columns="2">
+								<h:outputText value="#{msgs.serialnr}:"></h:outputText>
+								<h:inputText id="airplaneserial" binding="#{airplaneserial}"></h:inputText>
+								<h:outputText value="#{msgs.model}:"></h:outputText>
+								<h:inputText id="airplanemodel" binding="#{airplanemodel}"></h:inputText>
+								<h:outputText value="#{msgs.capacity}:"></h:outputText>
+								<p:inputNumber id="airplanecapacity"
+									binding="#{airplanecapacity}"></p:inputNumber>
+								<f:facet name="footer">
+									<p:commandButton value="#{msgs.save}"
+										actionListener="#{buttonView.savePlane(airplaneserial.value,airplanemodel.value,airplanecapacity.value)}"
+										icon="ui-icon-disk" update="airplanetable airplanelist" />
+								</f:facet>
+							</p:panelGrid>
+							<p:spacer height="30px;" />
+							<p:dataTable id="airplanetable" paginator="true" rows="5"
+								value="#{airplaneService.allAirplane}" var="p" editable="true">
+								<f:facet name="header">  
+                            #{msgs.airplanelist} 
+                    </f:facet>
+								<p:ajax event="rowEdit" listener="#{buttonView.updatePlane}"
+									update=":form1:messages" />
+								<p:ajax event="rowEditCancel"
+									listener="#{buttonView.deletePlane}" update=":form1:messages" />
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="#{msgs.serialnr}" />
+									</f:facet>
+									<p:cellEditor>
+										<f:facet name="output">
+											<h:outputText value="#{p.serialnr}" />
+										</f:facet>
+										<f:facet name="input">
+											<p:inputText value="#{p.serialnr}" style="width:100%" />
+										</f:facet>
+									</p:cellEditor>
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="#{msgs.model}" />
+									</f:facet>
+									<p:cellEditor>
+										<f:facet name="output">
+											<h:outputText value="#{p.model}" />
+										</f:facet>
+										<f:facet name="input">
+											<p:inputText value="#{p.model}" style="width:100%" />
+										</f:facet>
+									</p:cellEditor>
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="#{msgs.capacity}" />
+									</f:facet>
+									<p:cellEditor>
+										<f:facet name="output">
+											<h:outputText value="#{p.capacity}" />
+										</f:facet>
+										<f:facet name="input">
+											<p:inputText value="#{p.capacity}" style="width:100%" />
+										</f:facet>
+									</p:cellEditor>
+								</p:column>
+								<p:column headerText="#{msgs.optiontables}" style="width:50px">
+									<p:rowEditor />
+								</p:column>
+							</p:dataTable>
+						</p:panel>
+					</p:tab>
+					<p:tab title="#{msgs.airports}">
+						<p:panel header="#{msgs.newairport}" style="width: 600px;">
+							<p:panelGrid columns="2">
+								<h:outputText value="#{msgs.airportcode}:"></h:outputText>
+								<h:inputText id="airportcode" binding="#{airportcode}"></h:inputText>
+								<h:outputText value="#{msgs.name}:"></h:outputText>
+								<h:inputText id="airportname" binding="#{airportname}"></h:inputText>
+								<h:outputText value="#{msgs.city}:"></h:outputText>
+								<h:inputText id="airportcity" binding="#{airportcity}"></h:inputText>
+								<h:outputText value="#{msgs.country}:"></h:outputText>
+								<h:inputText id="airportcountry" binding="#{airportcountry}"></h:inputText>
+								<f:facet name="footer">
+									<p:commandButton value="#{msgs.save}"
+										actionListener="#{buttonView.saveAirport(airportcode.value,airportname.value,airportcity.value,airportcountry.value)}"
+										icon="ui-icon-disk" update="airporttable airportDestination airportOrigin" />
+								</f:facet>
+							</p:panelGrid>
+							<p:spacer height="30px;" />
+							<p:dataTable id="airporttable" paginator="true" rows="5"
+								value="#{airportService.allAirport}" var="ai" editable="true">
+								<f:facet name="header">  
+                            #{msgs.airportlist} 
+                    </f:facet>
+								<p:ajax event="rowEdit" listener="#{buttonView.updateAirport}"
+									update=":form1:messages" />
+								<p:ajax event="rowEditCancel"
+									listener="#{buttonView.deleteAirport}" update=":form1:messages" />
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="#{msgs.airportcode}" />
+									</f:facet>
+									<p:cellEditor>
+										<f:facet name="output">
+											<h:outputText value="#{ai.airportcode}" />
+										</f:facet>
+										<f:facet name="input">
+											<p:inputText value="#{ai.airportcode}" style="width:100%" />
+										</f:facet>
+									</p:cellEditor>
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="#{msgs.name}" />
+									</f:facet>
+									<p:cellEditor>
+										<f:facet name="output">
+											<h:outputText value="#{ai.name}" />
+										</f:facet>
+										<f:facet name="input">
+											<p:inputText value="#{ai.name}" style="width:100%" />
+										</f:facet>
+									</p:cellEditor>
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="#{msgs.city}" />
+									</f:facet>
+									<p:cellEditor>
+										<f:facet name="output">
+											<h:outputText value="#{ai.city}" />
+										</f:facet>
+										<f:facet name="input">
+											<p:inputText value="#{ai.city}" style="width:100%" />
+										</f:facet>
+									</p:cellEditor>
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="#{msgs.country}" />
+									</f:facet>
+									<p:cellEditor>
+										<f:facet name="output">
+											<h:outputText value="#{ai.country}" />
+										</f:facet>
+										<f:facet name="input">
+											<p:inputText value="#{ai.country}" style="width:100%" />
+										</f:facet>
+									</p:cellEditor>
+								</p:column>
+								<p:column headerText="#{msgs.optiontables}" style="width:50px">
+									<p:rowEditor />
+								</p:column>
+							</p:dataTable>
+						</p:panel>
+					</p:tab>
+					<p:tab title="#{msgs.flights}">
+						<p:panel header="#{msgs.newflight}" style="width: 600px;">
+							<p:panelGrid columns="2">
+								<h:outputText value="#{msgs.flightnr}:"></h:outputText>
+								<h:inputText id="flightnr" binding="#{flightnr}"></h:inputText>
+								<h:outputText value="#{msgs.departuredate}:"></h:outputText>
+								<p:calendar id="departuredate" binding="#{departureDate}" />
+								<h:outputText value="#{msgs.departuretime}:"></h:outputText>
+								<p:calendar id="departuretime" binding="#{departureTime}"
+									pattern="HH:mm" timeOnly="true" />
+								<h:outputText value="#{msgs.arrivaldate}:"></h:outputText>
+								<p:calendar id="arrivaldate" binding="#{arrivalDate}" />
+								<h:outputText value="#{msgs.arrivaltime}:"></h:outputText>
+								<p:calendar id="arrivaltime" binding="#{arrivalTime}"
+									pattern="HH:mm" timeOnly="true" />
+							<h:outputText value="#{msgs.airline}:"></h:outputText>
+								<h:selectOneMenu id="airlinelist" binding="#{selectedAirline}">
+    						<f:selectItems value="#{airlineService.allAirline}" var="airl" itemLabel="#{airl.name}"/>
+								</h:selectOneMenu>		
+							<h:outputText value="#{msgs.airplane}:"></h:outputText>
+								<h:selectOneMenu id="airplanelist" binding="#{selectedAirplane}">
+    						<f:selectItems value="#{airplaneService.allAirplane}" var="airpln" itemLabel="#{airpln.serialnr}"/>
+								</h:selectOneMenu>					
+								
+								<h:outputText value="#{msgs.airportorigin}:"></h:outputText>
+								<h:selectOneMenu id="airportOrigin" binding="#{selectedAirportOrigin}">
+    						<f:selectItems value="#{airportService.allAirport}"  var="airor" itemLabel="#{airor.airportcode}" />
+								</h:selectOneMenu>																									
+								<h:outputText value="#{msgs.airportdestination}:"></h:outputText>
+								<h:selectOneMenu id="airportDestination" binding="#{selectedAirportDestination}">
+    						<f:selectItems value="#{airportService.allAirport}" var="airdes" itemLabel="#{airdes.airportcode}"/>
+								</h:selectOneMenu>															
+								<f:facet name="footer">
+									<p:commandButton value="#{msgs.save}"
+										actionListener="#{buttonView.saveFlight(flightnr.value, departureDate.value, departureTime.value, arrivalDate.value, arrivalTime.value,selectedAirline.value, selectedAirplane.value,selectedAirportOrigin.value,selectedAirportDestination.value)}"
+										icon="ui-icon-disk" update="flighttable" />
+								</f:facet>
+							</p:panelGrid>
+							<p:spacer height="30px;" />
+							<p:dataTable id="flighttable" paginator="true" rows="5"
+								value="#{flightService.allFlight}" var="f" editable="true">
+								<f:facet name="header">  
+                            #{msgs.flightlist} 
+                    </f:facet>
+								<p:ajax event="rowEdit" listener="#{buttonView.updateFlight}"
+									update=":form1:messages" />
+								<p:ajax event="rowEditCancel"
+									listener="#{buttonView.deleteFlight}" update=":form1:messages" />
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="#{msgs.flightnr}" />
+									</f:facet>
+									<p:cellEditor>
+										<f:facet name="output">
+											<h:outputText value="#{f.flightnr}" />
+										</f:facet>
+										<f:facet name="input">
+											<p:inputText value="#{f.flightnr}" style="width:100%" />
+										</f:facet>
+									</p:cellEditor>
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="#{msgs.departuredate}" />
+									</f:facet>
+									<p:cellEditor>
+										<f:facet name="output">
+											<h:outputText value="#{f.departureDate}" />
+										</f:facet>
+										<f:facet name="input">
+											<p:inputText value="#{f.departureDate}" style="width:100%" />
+										</f:facet>
+									</p:cellEditor>
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="#{msgs.departuretime}" />
+									</f:facet>
+									<p:cellEditor>
+										<f:facet name="output">
+											<h:outputText value="#{f.departureTime}" />
+										</f:facet>
+										<f:facet name="input">
+											<p:inputText value="#{f.departureTime}" style="width:100%" />
+										</f:facet>
+									</p:cellEditor>
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="#{msgs.arrivaldate}" />
+									</f:facet>
+									<p:cellEditor>
+										<f:facet name="output">
+											<h:outputText value="#{f.arrivalDate}" />
+										</f:facet>
+										<f:facet name="input">
+											<p:inputText value="#{f.arrivalDate}" style="width:100%" />
+										</f:facet>
+									</p:cellEditor>
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="#{msgs.arrivaltime}" />
+									</f:facet>
+									<p:cellEditor>
+										<f:facet name="output">
+											<h:outputText value="#{f.arrivalTime}" />
+										</f:facet>
+										<f:facet name="input">
+											<p:inputText value="#{f.arrivalTime}" style="width:100%" />
+										</f:facet>
+									</p:cellEditor>
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="#{msgs.airline}" />
+									</f:facet>
+									<p:cellEditor>
+										<f:facet name="output">
+											<h:outputText value="#{f.airline.name}" />
+										</f:facet>
+										<f:facet name="input">
+											<p:inputText value="#{f.airline.name}" style="width:100%" />
+										</f:facet>
+									</p:cellEditor>
+								</p:column>
+								<p:column headerText="#{msgs.optiontables}" style="width:50px">
+									<p:rowEditor />
+								</p:column>
+							</p:dataTable>
+						</p:panel>
+					</p:tab>
+				</p:tabView>
+
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

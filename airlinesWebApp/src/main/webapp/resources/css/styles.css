@@ -63,6 +63,10 @@ img {
 }
 
 .filterclass{
-	width: 55px !important
-	text-size
+	width: 50px !important;
+    font-size: 10px;
+}
+
+.ui-widget {
+    font-size: 12px;
 }

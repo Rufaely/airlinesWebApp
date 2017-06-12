@@ -9,7 +9,7 @@
 #sidebarLeft {
    border: thin solid lightGray;
    padding: 5px;
-   width: 200px;
+   width: 196px;
    background: #eeeeee;
 }
 
@@ -20,7 +20,7 @@
    position: absolute;
    right: 8px;
    left: 230px;
-   height: 400px;
+   height: 438px;
    top: 90px;
 }
 
@@ -51,4 +51,22 @@
 .welcomeImage {
    margin-top: 10px;
    text-align: center;
+}
+
+img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.nameoption{
+	 text-align: center;
+}
+
+.filterclass{
+	width: 50px !important;
+    font-size: 10px;
+}
+
+.ui-widget {
+    font-size: 12px;
 }

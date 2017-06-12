@@ -15,80 +15,77 @@
          </ui:define>
 		<ui:define name="content">
 			<h:form>
-				<p:dataTable var="fl" value="#{dtFlightFilterView.flights}"
-					paginator="true" rows="5"
+				<p:commandButton value="#{msgs.clearfilter}"
+					action="#{dtFlightFilterView.clearFilters}" process="@this"
+					update="fligthlist" />
+				<p:dataTable id="fligthlist" var="fl"
+					value="#{dtFlightFilterView.flights}" paginator="true" rows="5"
 					widgetVar="flightsTable"
-					emptyMessage="No flights found with given criteria"
-					filteredValue="#{dtFlightFilterView.filteredFlights}">
+					emptyMessage="#{msgs.noflights}"
+					filteredValue="#{dtFlightFilterView.filteredFlights}"
+					resizableColumns="true">
 					<f:facet name="header">
 						<p:outputPanel>
-							<h:outputText value="Search all fields:" />
+							<h:outputText value="#{msgs.search}:" />
 							<p:inputText id="globalFilter"
 								onkeyup="PF('flightsTable').filter()" style="width:150px"
-								placeholder="Enter keyword" />
+								placeholder="#{msgs.Enterkey}" />
 						</p:outputPanel>
 					</f:facet>
-					<p:column filterStyleClass="filterclass" filterBy="#{fl.flightnr}" headerText="Flight Number"
-						 filterMatchMode="contains">
+					<p:column filterStyleClass="filterclass" filterBy="#{fl.flightnr}"
+						headerText="#{msgs.flightnr}" filterMatchMode="contains">
 						<h:outputText value="#{fl.flightnr}" />
 					</p:column>
-					<p:column filterStyleClass="filterclass" filterBy="#{airlineService.findByFlight(fl).get(0).name}"
-						headerText="Name Airline" 
+					<p:column filterStyleClass="filterclass"
+						filterBy="#{fl.airline.name}" headerText="#{msgs.airline}"
 						filterMatchMode="contains">
-						<h:outputText
-							value="#{airlineService.findByFlight(fl).get(0).name}" />
+						<h:outputText value="#{fl.airline.name}" />
 					</p:column>
-					<p:column filterStyleClass="filterclass" filterBy="#{fl.departureDate}"
-						headerText="Departure Date" 
+					<p:column filterStyleClass="filterclass"
+						filterBy="#{fl.departureDate}" headerText="#{msgs.departuredate}"
 						filterMatchMode="contains">
-						<h:outputText value="#{fl.departureDate}" />
+						<h:outputText value="#{fl.departureDate}">
+						</h:outputText>
 					</p:column>
-					<p:column filterStyleClass="filterclass" filterBy="#{fl.departureTime}"
-						headerText="Departure Time" 
+					<p:column filterStyleClass="filterclass"
+						filterBy="#{fl.departureTime}" headerText="#{msgs.departuretime}"
 						filterMatchMode="contains">
 						<h:outputText value="#{fl.departureTime}" />
 					</p:column>
-					<p:column filterStyleClass="filterclass" filterBy="#{fl.arrivalDate}" headerText="Arrival Date"
-						 filterMatchMode="contains">
+					<p:column filterStyleClass="filterclass"
+						filterBy="#{fl.arrivalDate}" headerText="#{msgs.arrivaldate}"
+						filterMatchMode="contains">
 						<h:outputText value="#{fl.arrivalDate}" />
 					</p:column>
-					<p:column filterStyleClass="filterclass" filterBy="#{fl.arrivalTime}" headerText="Arrival Time"
-						 filterMatchMode="contains">
+					<p:column filterStyleClass="filterclass"
+						filterBy="#{fl.arrivalTime}" headerText="#{msgs.arrivaldate}"
+						filterMatchMode="contains">
 						<h:outputText value="#{fl.arrivalTime}" />
 					</p:column>
 					<p:column filterStyleClass="filterclass"
-						filterBy="#{airportService.findByDeparture(fl).get(0).airportcode}"
-						headerText="Departure Airport Code" 
-						filterMatchMode="contains">
-						<h:outputText
-							value="#{airportService.findByDeparture(fl).get(0).airportcode}" />
-					</p:column>
-					<p:column
-						filterStyleClass="filterclass"
-						filterBy="#{airportService.findByDeparture(fl).get(0).name}"
-						headerText="Departure Airport Name" 
-						filterMatchMode="contains">
-						<h:outputText
-							value="#{airportService.findByDeparture(fl).get(0).name}" />
+						filterBy="#{fl.origin.airportcode}"
+						headerText="#{msgs.origincode}" filterMatchMode="contains">
+						<h:outputText value="#{fl.origin.airportcode}" />
 					</p:column>
 					<p:column filterStyleClass="filterclass"
-						filterBy="#{airportService.findByArrival(fl).get(0).airportcode}"
-						headerText="Arrival Airport Code" 
+						filterBy="#{fl.origin.name}" headerText="#{msgs.origin}"
 						filterMatchMode="contains">
-						<h:outputText
-							value="#{airportService.findByArrival(fl).get(0).airportcode}" />
+						<h:outputText value="#{fl.origin.name}" />
 					</p:column>
 					<p:column filterStyleClass="filterclass"
-						filterBy="#{airportService.findByArrival(fl).get(0).name}"
-						headerText="Arrival Airport Name" 
+						filterBy="#{fl.destination.airportcode}"
+						headerText="#{msgs.destinationcode}" filterMatchMode="contains">
+						<h:outputText value="#{fl.destination.airportcode}" />
+					</p:column>
+					<p:column filterStyleClass="filterclass"
+						filterBy="#{fl.destination.name}"
+						headerText="#{msgs.destination}" filterMatchMode="contains">
+						<h:outputText value="#{fl.destination.name}" />
+					</p:column>
+					<p:column headerText="#{msgs.Airplanemodcap}"
 						filterMatchMode="contains">
 						<h:outputText
-							value="#{airportService.findByArrival(fl).get(0).name}" />
-					</p:column>
-					<p:column headerText="Airplane Model - Capacity"
-						 filterMatchMode="contains">
-						<h:outputText
-							value="#{airplaneService.findByFlight(fl).get(0).model.concat('-'.concat(airplaneService.findByFlight(fl).get(0).capacity))}" />
+							value="#{fl.airplane.model.concat('-'.concat(fl.airplane.capacity))}" />
 					</p:column>
 				</p:dataTable>
 
