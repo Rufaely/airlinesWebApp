@@ -20,6 +20,7 @@ public class Airline implements Serializable{
 	@Id
 	@GeneratedValue
 	private long id;
+	@Column(name = "NAME"
 	private String name;
 	@OneToMany(mappedBy = "airline")
 	@OrderBy("departureDate, departureTime")
